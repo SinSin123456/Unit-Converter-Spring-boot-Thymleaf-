@@ -15,25 +15,33 @@ function updateUnitOptions(category) {
     });
 }
 
-$("#category").on("change", function () {
-    updateUnitOptions($(this).val());
-});
-
-$("#convertForm").on("submit", function (e) {
-    e.preventDefault();
-    const category = $("#category").val();
-    const from = $("#fromUnit").val();
-    const to = $("#toUnit").val();
-    const value = parseFloat($("#value").val());
-
-    $.post("/api/convert", { category, from, to, value }, function (data) {
-        $("#result").text(data.toFixed(4));
-    }).fail(() => {
-        $("#result").text("Error in conversion.");
-    });
-});
-
-// Default load
 $(document).ready(function () {
     updateUnitOptions("length");
+
+    $(".tab-btn").click(function () {
+        $(".tab-btn").removeClass("active");
+        $(this).addClass("active");
+        const selected = $(this).data("category");
+        $("#category").val(selected);
+        updateUnitOptions(selected);
+    });
+
+    $("#convertForm").on("submit", function (e) {
+        e.preventDefault();
+        const category = $("#category").val();
+        const from = $("#fromUnit").val();
+        const to = $("#toUnit").val();
+        const value = parseFloat($("#value").val());
+
+        $.post("/api/convert", { category, from, to, value }, function (data) {
+            $("#resultText").text(`${value} ${from} = ${data.toFixed(3)} ${to}`);
+        }).fail(() => {
+            $("#resultText").text("Conversion error!");
+        });
+    });
+
+    $("#resetBtn").click(() => {
+        $("#value").val('');
+        $("#resultText").text('--');
+    });
 });

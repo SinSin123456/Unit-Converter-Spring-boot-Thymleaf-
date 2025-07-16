@@ -6,54 +6,119 @@
     <title>Unit Converter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap 5 CSS CDN -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- jQuery CDN -->
+    <!-- Google Font (Comic-style) -->
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Bootstrap JS CDN -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Patrick Hand', cursive;
+            background-color: #f8f9fa;
+        }
+
+        .converter-box {
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            background: white;
+        }
+
+        .tab-btn {
+            font-weight: bold;
+            border: none;
+            background: none;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            text-decoration: underline;
+            color: #007bff;
+        }
+
+        .form-control {
+            border: 2px solid black;
+            border-radius: 6px;
+            font-family: 'Patrick Hand', cursive;
+        }
+
+        .btn-custom {
+            border: 2px solid black;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.2rem;
+            padding: 5px 20px;
+            border-radius: 6px;
+        }
+
+        h2 {
+            font-weight: bold;
+        }
+
+        #resultText {
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
 
-
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow">
-            <div class="card-body">
-                <h2 class="card-title text-center mb-4">Unit Converter</h2>
-
-                <form id="convertForm">
-                    <div class="mb-3">
-                        <label class="form-label">Category:</label>
-                        <select id="category" class="form-select">
-                            <option value="length">Length</option>
-                            <option value="weight">Weight</option>
-                            <option value="temperature">Temperature</option>
-                        </select>
+<body>
+    <div class="container py-5">
+        <div class="row">
+            <!-- Left Panel -->
+            <div class="col-md-6">
+                <div class="converter-box">
+                    <h2>Unit Converter</h2>
+                    <div class="mt-3 mb-4">
+                        <button class="tab-btn active" data-category="length">Length</button>
+                        <button class="tab-btn" data-category="weight">Weight</button>
+                        <button class="tab-btn" data-category="temperature">Temperature</button>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">From:</label>
-                        <select id="fromUnit" class="form-select"></select>
+                    <form id="convertForm">
+                        <input type="hidden" id="category" value="length">
+
+                        <div class="mb-3">
+                            <label>Enter the value to convert</label>
+                            <input type="number" id="value" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Unit to Convert from</label>
+                            <select id="fromUnit" class="form-control"></select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Unit to Convert to</label>
+                            <select id="toUnit" class="form-control"></select>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom">Convert</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="col-md-6">
+                <div class="converter-box text-center">
+                    <h2>Unit Converter</h2>
+                    <div class="mt-3 mb-4">
+                        <button class="tab-btn active" disabled>Length</button>
+                        <button class="tab-btn" disabled>Weight</button>
+                        <button class="tab-btn" disabled>Temperature</button>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">To:</label>
-                        <select id="toUnit" class="form-select"></select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Value:</label>
-                        <input type="number" id="value" class="form-control" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100">Convert</button>
-                </form>
-
-                <div class="mt-4 text-center">
-                    <h4>Result:</h4>
-                    <div id="result" class="fw-bold fs-4">--</div>
+                    <p>Result of your calculation</p>
+                    <div id="resultText" class="fw-bold mb-4">--</div>
+                    <button class="btn btn-custom" id="resetBtn">Reset</button>
                 </div>
             </div>
         </div>
@@ -61,3 +126,5 @@
 
     <script src="/js/main.js"></script>
 </body>
+
+</html>
